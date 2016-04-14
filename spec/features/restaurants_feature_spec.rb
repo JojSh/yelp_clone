@@ -1,13 +1,24 @@
 require 'rails_helper'
+require 'pry'
 
-feature 'restaurants' do
-  context 'no restaurants should have been added' do
+feature 'Restaurants:' do
 
-    before do
-      Restaurant.create(name: 'KFC')
-    end
+  before { user_sign_up }
+
+  context 'no restaurants should have been added:' do
 
     scenario 'should display a prompt to add a restaurant' do
+      visit '/restaurants'
+      expect(page).to have_content('No restaurants yet')
+      expect(page).to have_link('Add a restaurant')
+    end
+  end
+
+  context 'restaurants have been added' do
+
+    before { Restaurant.create(name: 'KFC') }
+
+    scenario 'display restaurants' do
       visit '/restaurants'
       expect(page).to have_content('KFC')
       expect(page).not_to have_content('No restaurants yet')
@@ -39,9 +50,9 @@ feature 'restaurants' do
 
   context 'editing restaurants' do
 
-    before { Restaurant.create name: 'KFC ' }
+    before { add_restaurant }
 
-    scenario 'let a user edit a restaurant' do
+    scenario 'let a user edit a restaurant they added' do
       visit '/restaurants'
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
@@ -51,14 +62,22 @@ feature 'restaurants' do
     end
   end
 
-  context 'deleting restaurants' do
-    before { Restaurant.create name: 'KFC' }
+  context 'deleting restaurants:' do
 
-    scenario 'removes a restaurant when a user clicks a delete link' do
+    before { add_restaurant }
+
+    scenario 'user can delete a restaurant they created' do
       visit '/restaurants'
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted successfully'
+    end
+
+    scenario 'user cannot delete a restaurant they did not create' do
+      click_link('Sign out')
+      alt_sign_up
+      expect(page).to have_link('Sign out')
+      expect(page).not_to have_content('Delete KFC')
     end
   end
 
@@ -72,5 +91,4 @@ feature 'restaurants' do
       expect(page).to have_content 'error'
     end
   end
-
 end

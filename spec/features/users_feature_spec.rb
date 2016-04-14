@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature "User can sign in an out" do
+
   context "user not signed in and is on the homepage" do
     it "should see a 'sign in' link and a 'sign up' link" do
       visit('/')
@@ -16,14 +17,7 @@ feature "User can sign in an out" do
 
   context "user is signed in and on the homepage" do
 
-    before do
-      visit('/')
-      click_link('Sign up')
-      fill_in('Email', with: 'test@example.com')
-      fill_in('Password', with: 'testpass')
-      fill_in('Password confirmation', with: 'testpass')
-      click_button('Sign up')
-    end
+    before { user_sign_up }
 
     it "should see 'sign out' link" do
       visit('/')

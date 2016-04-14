@@ -1,15 +1,34 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the RestaurantsHelper. For example:
-#
-# describe RestaurantsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
-RSpec.describe RestaurantsHelper, type: :helper do
-  # pending "add some examples to (or delete) #{__FILE__}"
-end
+  def user_sign_up
+    visit('/')
+    click_link('Sign up')
+    fill_in('Email', with: 'test@example.com')
+    fill_in('Password', with: 'testpass')
+    fill_in('Password confirmation', with: 'testpass')
+    click_button('Sign up')
+  end
+
+  def add_restaurant
+    visit('/restaurants')
+    click_link('Add a restaurant')
+    fill_in('Name', with: 'KFC')
+    click_button('Create Restaurant')
+  end
+
+  # def sign_in
+  #   visit('/restaurants')
+  #   fill_in('Email', with: 'test@example.com')
+  #   fill_in('Password', with: 'testpass')
+  #   click_button('Log in')
+  # end
+
+
+  def alt_sign_up
+    visit('/')
+    click_link('Sign up')
+    fill_in('Email', with: 'second@example.com')
+    fill_in('Password', with: 'password2')
+    fill_in('Password confirmation', with: 'password2')
+    click_button('Sign up')
+  end
