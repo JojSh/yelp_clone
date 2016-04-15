@@ -23,6 +23,14 @@ require 'rails_helper'
   #   click_button('Log in')
   # end
 
+  def review_restaurant
+    visit '/restaurants'
+    click_link 'Review KFC'
+    fill_in "Thoughts", with: "so so"
+    select '3', from: 'Rating'
+    click_button 'Submit review'
+  end
+
 
   def alt_sign_up
     visit('/')
