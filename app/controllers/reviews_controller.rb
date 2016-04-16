@@ -13,9 +13,18 @@ class ReviewsController < ApplicationController
     @restaurant = Restaurant.find(params[:restaurant_id])
     @review = @restaurant.reviews.create(review_params)
     @review.update(user_id: current_user.id)
-    # binding.pry
-    redirect_to restaurants_path
+    # if @review.save
+      redirect_to restaurants_path
+    # else
+    #   if @review.errors[:user]
+    #     redirect_to restaurants_path, alert: 'You have already reviewed this restaurant'
+    #   else
+    #     render :new
+    #   end
+    # end
   end
+
+
 
   def destroy
     @review = Review.find(params[:id])
