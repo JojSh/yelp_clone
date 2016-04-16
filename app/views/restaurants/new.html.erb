@@ -10,8 +10,9 @@
     <% end %>
 
 
-<%= form_for @restaurant do |form| %>
-  <%= form.label :name %>
+<%= form_for @restaurant, html: {multipart: true} do |form| %>  <%= form.label :name %>
   <%= form.text_field :name %>
   <%= form.submit %>
+  <%= form.file_field :image %>
+
 <% end %>
